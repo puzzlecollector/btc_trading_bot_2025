@@ -6,7 +6,7 @@ openai.api_key = "<MASKED>"
 client = OpenAI()
 
 # Initialize tokenizer for the specific model
-tokenizer = tiktoken.encoding_for_model("text-embedding-3-large")  # Use the correct embedding model  
+tokenizer = tiktoken.encoding_for_model("text-embedding-3-large")  # Use the correct embedding model
 
 def truncate_text(text, max_tokens, tokenizer):
     """
@@ -19,7 +19,7 @@ def truncate_text(text, max_tokens, tokenizer):
 
 
 def get_embedding(text, model="text-embedding-3-large"):
-    text = truncate_text(text, 8192, tokenizer) 
+    text = truncate_text(text, 8100, tokenizer) # set to a value slightly under the max token count value 
     return client.embeddings.create(input = [text], model=model).data[0].embedding
 
 #embedding = get_embedding(sample_text)  
@@ -44,6 +44,6 @@ for date in tqdm(sorted(grouped_news.keys()), desc="Processing embeddings"):
 final_embeddings = torch.cat(all_embeddings, dim=0)
 
 # Save embeddings
-torch.save(final_embeddings, "grouped_news_embeddings.pt")
+torch.save(final_embeddings, "/content/drive/MyDrive/grouped_news_embeddings.pt")
 print(f"Final embeddings shape: {final_embeddings.shape}")
-print("Embeddings saved to 'grouped_news_embeddings.pt'")
+print("Embeddings saved to '/content/drive/MyDrive/grouped_news_embeddings.pt'")
